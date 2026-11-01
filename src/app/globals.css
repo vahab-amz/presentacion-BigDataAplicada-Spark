@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+/* ── Design tokens ───────────────────────────────────────────────
+   Dark by default; [data-theme="light"] for weak projectors. */
+:root,
+:root[data-theme="dark"] {
+  --bg: #0b0f17;
+  --surface: #121826;
+  --border: #243045;
+  --text: #e6eaf2;
+  --muted: #8a94a7;
+  --accent: #ff6a1a;
+  --ok: #22c55e;
+  --bad: #ef4444;
+  --info: #38bdf8;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --border: #d9dee7;
+  --text: #0f172a;
+  --muted: #5b6475;
+  --accent: #e5550a;
+  --ok: #16a34a;
+  --bad: #dc2626;
+  --info: #0284c7;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-edge: var(--border);
+  --color-fg: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+  --color-info: var(--info);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "Cascadia Mono", monospace;
+}
+
+/* Type scale on the 1920×1080 canvas */
+@theme {
+  --text-caption: 22px;
+  --text-caption--line-height: 1.3;
+  --text-small: 26px;
+  --text-small--line-height: 1.3;
+  --text-data: 28px;
+  --text-data--line-height: 1.35;
+  --text-body: 32px;
+  --text-body--line-height: 1.35;
+  --text-lead: 40px;
+  --text-lead--line-height: 1.25;
+  --text-h3: 44px;
+  --text-h3--line-height: 1.2;
+  --text-title: 72px;
+  --text-title--line-height: 1.1;
+  --text-display: 150px;
+  --text-display--line-height: 1;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  overflow: hidden;
+}
+
+/* The print page scrolls normally */
+body:has(.print-root) {
+  overflow: auto;
+}
+
+/* ── Ambient loops (CSS, compositor-only) ──────────────────────── */
+@keyframes flow-x {
+  from {
+    transform: translateX(var(--flow-from, -60px));
+  }
+  to {
+    transform: translateX(var(--flow-to, 1980px));
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.flow-dot {
+  animation: flow-x var(--flow-duration, 9s) linear infinite;
+  animation-delay: var(--flow-delay, 0s);
+  will-change: transform;
+}
+
+.pulse-soft {
+  animation: pulse-soft 1.6s ease-in-out infinite;
+}
+
+.ambient-off .flow-dot,
+.ambient-off .pulse-soft {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-dot,
+  .pulse-soft {
+    animation: none !important;
+  }
+}
+
+/* ── Print fallback (/print) ───────────────────────────────────── */
+@page {
+  size: 1920px 1080px;
+  margin: 0;
+}
+
+.print-page {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  break-after: page;
+  page-break-after: always;
+}
+
+@media screen {
+  .print-root .print-page {
+    zoom: 0.5;
+    margin: 0 auto 24px;
+    outline: 2px solid var(--border);
+  }
+}
+
+@media print {
+  html,
+  body {
+    background: var(--bg);
+    overflow: visible;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print-toolbar {
+    display: none !important;
+  }
+  .print-root {
+    padding: 0 !important;
+  }
+}
+
+/* Event chips flowing into the input table (slide 3) */
+@keyframes flow-chip {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--flow-to, 300px));
+    opacity: 0;
+  }
+}
+
+.flow-chip {
+  animation: flow-chip var(--flow-duration, 4s) linear infinite;
+  animation-delay: var(--flow-delay, 0s);
+  will-change: transform, opacity;
+}
+
+.ambient-off .flow-chip {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-chip {
+    animation: none !important;
+  }
+}
