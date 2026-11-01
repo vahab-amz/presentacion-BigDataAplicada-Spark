@@ -138,6 +138,17 @@ body:has(.print-root) {
   page-break-after: always;
 }
 
+.print-page:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+.print-root .flow-dot,
+.print-root .flow-chip,
+.print-root .pulse-soft {
+  animation: none !important;
+}
+
 @media screen {
   .print-root .print-page {
     zoom: 0.5;

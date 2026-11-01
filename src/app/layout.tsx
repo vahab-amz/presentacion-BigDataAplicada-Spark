@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { OfflineSupport } from "@/components/deck/OfflineSupport";
 import { THEME_STORAGE_KEY } from "@/lib/deck/types";
 import "./globals.css";
 
@@ -41,7 +42,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <OfflineSupport />
+      </body>
     </html>
   );
 }
