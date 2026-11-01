@@ -76,7 +76,7 @@ function EventChip({
     tone = isNext ? "border-accent bg-surface text-fg" : "border-edge bg-surface text-fg";
   } else if (outcome.status === "aceptado") {
     animate = { x: axisX, y: CHIP_ROW_Y + outcome.row * CHIP_ROW_GAP, opacity: windowClosed ? 0.55 : 1 };
-    tone = "border-ok bg-ok/15 text-fg";
+    tone = "border-ok bg-[color-mix(in_oklab,var(--ok)_18%,var(--surface))] text-fg";
   } else {
     animate = { x: axisX, y: [null, DROP_FROM_Y, DROP_TO_Y], opacity: [null, 1, 0] };
     transition = live
@@ -86,7 +86,7 @@ function EventChip({
           opacity: { duration: 1.9, times: [0, 0.72, 1] },
         }
       : { duration: 0 };
-    tone = "border-bad bg-bad/20 text-fg";
+    tone = "border-bad bg-[color-mix(in_oklab,var(--bad)_22%,var(--surface))] text-fg";
   }
 
   return (
@@ -159,7 +159,7 @@ function WindowBox({ win, live }: { win: WindowState; live: boolean }) {
         {live && freed > 0 && closed && (
           <motion.div
             key={freed}
-            className="pointer-events-none absolute inset-0 flex items-center justify-center"
+            className="pointer-events-none absolute inset-0 flex items-end justify-center pb-[18px]"
             initial={{ opacity: 1 }}
             animate={{ opacity: 0 }}
             transition={{ duration: 1.6, delay: 0.9, ease: "easeOut" }}

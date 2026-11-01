@@ -7,7 +7,7 @@ interface SegmentedProps<T extends string | number> {
   value: T;
   onChange: (value: T) => void;
   className?: string;
-  size?: "md" | "lg";
+  size?: "sm" | "md" | "lg";
   ariaLabel: string;
 }
 
@@ -25,7 +25,7 @@ export function Segmented<T extends string | number>({
       role="radiogroup"
       aria-label={ariaLabel}
       data-interactive
-      className={cx("inline-flex rounded-[16px] border-2 border-edge bg-bg p-[5px]", className)}
+      className={cx("inline-flex rounded-[16px] border-2 border-edge bg-bg p-[4px]", className)}
     >
       {options.map((opt) => {
         const active = opt.value === value;
@@ -40,7 +40,11 @@ export function Segmented<T extends string | number>({
             onMouseDown={(e) => e.preventDefault()}
             className={cx(
               "cursor-pointer whitespace-nowrap rounded-[11px] font-mono font-semibold transition-colors duration-200",
-              size === "lg" ? "px-[26px] py-[10px] text-[28px]" : "px-[16px] py-[8px] text-[26px]",
+              size === "lg"
+                ? "px-[26px] py-[10px] text-[28px]"
+                : size === "sm"
+                  ? "px-[12px] py-[5px] text-[16px]"
+                  : "px-[16px] py-[8px] text-[26px]",
               active ? "bg-accent text-bg" : "text-muted hover:text-fg",
             )}
           >
