@@ -19,7 +19,7 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Spark en tiempo real · Grupo 6",
   description:
-    "Structured Streaming y MLlib: presentación del Grupo 6 (Vau y Onai) para Big Data Aplicado.",
+    "Structured Streaming y MLlib: presentación del Grupo 6 para Big Data Aplicado.",
 };
 
 export const viewport: Viewport = {

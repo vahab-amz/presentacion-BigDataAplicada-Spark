@@ -1,7 +1,10 @@
 import { STEPS_OF, TOTAL_SLIDES, type SlideDef } from "@/content/slides";
 import { progressOf } from "@/lib/deck/navigation";
 
-/** Progress bar (top), speaker (bottom-left) and slide number (bottom-right). */
+/**
+ * Progress bar (top) and slide number (bottom-right).
+ * The speaker's name is deliberately not shown on the projector (only in /presenter).
+ */
 export function SlideChrome({ def, step }: { def: SlideDef; step: number }) {
   const progress = progressOf({ slide: def.id, step }, STEPS_OF);
   return (
@@ -11,9 +14,6 @@ export function SlideChrome({ def, step }: { def: SlideDef; step: number }) {
           className="h-full bg-accent transition-[width] duration-300 ease-out motion-reduce:transition-none"
           style={{ width: `${progress * 100}%` }}
         />
-      </div>
-      <div className="pointer-events-none absolute bottom-[36px] left-[120px] text-[24px] font-medium text-muted">
-        {def.speaker}
       </div>
       <div className="pointer-events-none absolute bottom-[36px] right-[120px] font-mono text-[24px] text-muted tabular-nums">
         {def.id} / {TOTAL_SLIDES}

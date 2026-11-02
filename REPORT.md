@@ -13,7 +13,8 @@ Nothing has been deployed: deploy to Vercel yourself (it is a standard Next.js p
 | M4 | Presenter view `/presenter` | ✅ done | `a558b66` |
 | M5 | Micro-batch stepper, slide 5 (`microbatch.ts` + tests + UI) | ✅ done | `c3a6e9a` |
 | M6 | Pipeline conveyor, slide 9 | ✅ done | `e22192a` |
-| M7 | Polish: `/print`, QR, ambient loops (1, 3, 10, 11), reduced motion, light theme, metadata, offline | ✅ done | `a9b4ece` + final commit |
+| M7 | Polish: `/print`, QR, ambient loops (1, 3, 10, 11), reduced motion, light theme, metadata, offline | ✅ done | `a9b4ece`, `312a2f3` |
+| — | Follow-up: presenter names removed from everything the projector shows | ✅ done | see `git log` |
 
 Verification (final run):
 
@@ -23,6 +24,7 @@ Verification (final run):
 - Reduced motion (emulated): ambient loops stop (slide 1 dots, slide 3 table, slide 11 feed) and slide 3 resumes appending once motion is allowed again.
 - Offline (emulated): after one online visit, reloading `/` and opening `/presenter` and `/print` with the network cut all work.
 - `/print` → PDF: 12 pages of 1920×1080 px (1440×810 pt), no blank trailing page.
+- No presenter names on the projector: the rendered text, `aria-label`, `alt` and `title` attributes of all 12 slides on `/`, the whole of `/print` and the page's meta description contain neither "Vau" nor "Onai" (checked in headless Chrome after the change).
 
 ## How to run
 
@@ -60,6 +62,7 @@ Shortcuts are ignored when Ctrl/Alt/⌘ is held, so browser shortcuts (Ctrl+P, C
 3. Press **P** (or open `/presenter` yourself) and keep that window on the laptop: live slide, preview of the next step, notes with `→n` markers (the current one is filled), timers, buttons for prev/next, threshold (slide 7), output mode (slide 5), theme, fullscreen and "Proyector" (opens `/`).
 4. Drive from either window or a remote; both follow each other. A window opened later adopts the running position (it never resets the others). Reloading one window also re-syncs it.
 5. Timer: press ▶ in the presenter top bar when you start. It also tracks time per speaker (Vau = orange pill, Onai = blue pill).
+6. The presenters' names appear **only** in `/presenter` (speaker pill, per-speaker timers and the speaker notes). The projector (`/`) and the PDF (`/print`) never show them.
 
 ## PDF backup (`/print`)
 
@@ -95,6 +98,15 @@ Open `/print` → button **Imprimir / Guardar como PDF** (or Ctrl+P) → destina
 - Slide 10: the dots flow continuously along the streaming lane; the "se carga en streaming" link is a curved arrow.
 - Slide 11: to keep times in order before 03:14:20, the Kafka feed fills progressively during step 0 (03:13:34 → 03:14:16) and then stays still. It is not an endless loop. The suspicious payment is shown on two lines (`03:14:20 · 900 € · BR` / `tarjeta ****4821`). Added "900 € / 45 €" under the ratio. "Detectado en 1,8 s" appears together with ALERTA #2, when the 6th bar crosses the dashed line at 5.
 - Slide 12: the QR encodes `window.location.origin`, so it points to whatever URL the deck is served from (your Vercel URL once deployed; `localhost` when run locally).
+
+## Change after review: no presenter names on the projector
+
+Requested after the first delivery (this overrides PROMPT.md §2 "speaker name bottom-left" and the slide 1 footer):
+
+- Slide 1 footer is now `Grupo 6` (was `Grupo 6 · Vau y Onai`).
+- The slide chrome no longer shows the speaker name bottom-left, on every slide, on `/` and in `/print`. Only the progress bar and the slide number (`7 / 12`) remain. The presenter's preview of the next slide uses the same chrome, so it has no name either.
+- The page metadata description no longer names the presenters.
+- Unchanged: `speaker` is still stored per slide in `src/content/slides.ts` and drives the speaker pill and per-speaker timers in `/presenter`. The speaker notes are verbatim and still mention the names (slide 1: "Somos el Grupo 6, Vau y Onai."; slide 7: "Ahora Onai os explica…"). Notes only appear in `/presenter`.
 
 ## Known issues / notes
 

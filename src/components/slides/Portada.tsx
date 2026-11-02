@@ -54,7 +54,7 @@ export function Portada() {
 
       <div className="absolute bottom-[172px] left-[160px] flex items-center gap-[18px] text-body font-medium text-fg">
         <span className="block h-[14px] w-[14px] rounded-full bg-accent" aria-hidden />
-        Grupo 6 · Vau y Onai
+        Grupo 6
       </div>
     </div>
   );
