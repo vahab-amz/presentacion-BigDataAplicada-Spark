@@ -7,8 +7,10 @@ import type { SlideProps } from "./types";
 
 interface Piece {
   name: string;
-  method: string;
+  method?: string;
   lines: string[];
+  /** mono line shown after the description */
+  result?: string;
   example?: string;
   icon: LucideIcon;
   tone: "ok" | "info" | "accent";
@@ -33,8 +35,8 @@ const PIECES: readonly Piece[] = [
   },
   {
     name: "Pipeline",
-    method: "fit() → PipelineModel",
     lines: ["Cadena de etapas · es un Estimator"],
+    result: "fit() → PipelineModel",
     icon: Boxes,
     tone: "accent",
   },
@@ -64,12 +66,19 @@ export function MllibPiezas({ step }: SlideProps) {
                     </span>
                     <span className="text-[50px] font-semibold text-fg">{p.name}</span>
                   </div>
-                  <div className={`mt-[28px] font-mono text-[34px] font-semibold ${tone.text}`}>{p.method}</div>
+                  {p.method && (
+                    <div className={`mt-[28px] font-mono text-[34px] font-semibold ${tone.text}`}>{p.method}</div>
+                  )}
                   {p.lines.map((l) => (
-                    <div key={l} className="mt-[16px] text-body text-fg">
+                    <div key={l} className={`${p.method ? "mt-[16px]" : "mt-[28px]"} text-body text-fg`}>
                       {l}
                     </div>
                   ))}
+                  {p.result && (
+                    <div className={`mt-[24px] whitespace-nowrap font-mono text-[30px] font-semibold ${tone.text}`}>
+                      {p.result}
+                    </div>
+                  )}
                   {p.example && (
                     <div className="mt-auto">
                       <div className="text-caption uppercase tracking-[0.1em] text-muted">ejemplo</div>
