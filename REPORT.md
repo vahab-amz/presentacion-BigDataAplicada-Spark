@@ -14,7 +14,8 @@ Nothing has been deployed: deploy to Vercel yourself (it is a standard Next.js p
 | M5 | Micro-batch stepper, slide 5 (`microbatch.ts` + tests + UI) | ✅ done | `c3a6e9a` |
 | M6 | Pipeline conveyor, slide 9 | ✅ done | `e22192a` |
 | M7 | Polish: `/print`, QR, ambient loops (1, 3, 10, 11), reduced motion, light theme, metadata, offline | ✅ done | `a9b4ece`, `312a2f3` |
-| — | Follow-up: presenter names removed from everything the projector shows | ✅ done | see `git log` |
+| — | Follow-up: presenter names removed from everything the projector shows | ✅ done | `ff52aa7` |
+| — | Follow-up: Spark 4.1 Real-Time Mode badge and note removed from slide 4 | ✅ done | `3117884` |
 
 Verification (final run):
 
@@ -25,6 +26,7 @@ Verification (final run):
 - Offline (emulated): after one online visit, reloading `/` and opening `/presenter` and `/print` with the network cut all work.
 - `/print` → PDF: 12 pages of 1920×1080 px (1440×810 pt), no blank trailing page.
 - No presenter names on the projector: the rendered text, `aria-label`, `alt` and `title` attributes of all 12 slides on `/`, the whole of `/print` and the page's meta description contain neither "Vau" nor "Onai" (checked in headless Chrome after the change).
+- No Real-Time Mode (after the slide 4 change): lint, vitest (30 passed) and build re-run and all pass. In headless Chrome at 1920×1080, the rendered text of all 12 slides on `/` (final step), `/presenter` on slides 3 and 4 (live slide, next-step preview, notes) and the whole of `/print` contains neither "Real-Time", "Spark 4.1", "milisegundos" nor "sin estado"; "Checkpoint → exactly-once" is still there; 0 console errors. `screenshots/slide-04.png` regenerated.
 
 ## How to run
 
@@ -107,6 +109,15 @@ Requested after the first delivery (this overrides PROMPT.md §2 "speaker name b
 - The slide chrome no longer shows the speaker name bottom-left, on every slide, on `/` and in `/print`. Only the progress bar and the slide number (`7 / 12`) remain. The presenter's preview of the next slide uses the same chrome, so it has no name either.
 - The page metadata description no longer names the presenters.
 - Unchanged: `speaker` is still stored per slide in `src/content/slides.ts` and drives the speaker pill and per-speaker timers in `/presenter`. The speaker notes are verbatim and still mention the names (slide 1: "Somos el Grupo 6, Vau y Onai."; slide 7: "Ahora Onai os explica…"). Notes only appear in `/presenter`.
+
+## Change after review: no Real-Time Mode on slide 4
+
+Requested after the first delivery (this overrides PROMPT.md §5, slide 4 step 3, and slide 4's note in §6):
+
+- Slide 4 step 3 now shows only the `Checkpoint → exactly-once` badge. The `Spark 4.1 · Real-Time Mode: milisegundos (consultas sin estado)` badge is gone. Slide 4 still has 3 steps.
+- Slide 4's speaker notes no longer include "Y desde Spark 4.1, el Real-Time Mode baja la latencia a milisegundos en consultas sin estado." They now end at "…cada evento cuenta exactamente una vez."
+- No other mention of Real-Time Mode or Spark 4.1 was found in `src/`. The deck title "Spark en tiempo real" is unrelated and stays. `PROMPT.md` (the original brief) still mentions it and was left as is.
+- `/`, `/presenter` and `/print` all read the same slide component and `src/content/slides.ts`, so all three show the change.
 
 ## Known issues / notes
 
