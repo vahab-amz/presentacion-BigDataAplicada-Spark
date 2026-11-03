@@ -62,7 +62,7 @@ export const slides: readonly SlideDef[] = [
     steps: 3,
     component: "ConsultaStreaming",
     notes:
-      "[→] Una consulta tiene una fuente, normalmente Kafka, una transformación y un destino. [→] El output mode decide qué se escribe: solo lo nuevo, solo lo que cambia o toda la tabla. [→] El checkpoint guarda el progreso y el estado: si la aplicación se cae, continúa donde lo dejó y cada evento cuenta exactamente una vez. Y desde Spark 4.1, el Real-Time Mode baja la latencia a milisegundos en consultas sin estado.",
+      "[→] Una consulta tiene una fuente, normalmente Kafka, una transformación y un destino. [→] El output mode decide qué se escribe: solo lo nuevo, solo lo que cambia o toda la tabla. [→] El checkpoint guarda el progreso y el estado: si la aplicación se cae, continúa donde lo dejó y cada evento cuenta exactamente una vez.",
   },
   {
     id: 5,

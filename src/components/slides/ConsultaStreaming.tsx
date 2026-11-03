@@ -1,6 +1,6 @@
 "use client";
 
-import { Cog, Database, Radio, ShieldCheck, Zap, type LucideIcon } from "lucide-react";
+import { Cog, Database, Radio, ShieldCheck, type LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowRightLine, Card, Content, Pill, SlideTitle } from "@/components/ui/primitives";
 import type { SlideProps } from "./types";
@@ -54,10 +54,6 @@ export function ConsultaStreaming({ step }: SlideProps) {
           <Pill tone="ok" className="py-[16px] text-[32px]">
             <ShieldCheck size={36} aria-hidden />
             Checkpoint → exactly-once
-          </Pill>
-          <Pill tone="info" className="py-[16px] text-[32px]">
-            <Zap size={36} aria-hidden />
-            Spark 4.1 · Real-Time Mode: milisegundos (consultas sin estado)
           </Pill>
         </Reveal>
       </Content>
